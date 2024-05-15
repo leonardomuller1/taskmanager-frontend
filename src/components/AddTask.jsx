@@ -10,11 +10,11 @@ import CustomButton from "./CustomButton";
 
 import "./AddTask.scss";
 
-const AddTask = () => {
+const AddTask = ({ fetchTasks }) => {
   const [task, setTask] = useState("");
 
-  const notify = () => {
-    toast.error("Erro ao adicionar tarefa! Precisa de uma descrição", {
+  const notify = (type, msg) => {
+    toast[type](msg, {
       position: "bottom-right",
       autoClose: 1000,
     });
@@ -27,15 +27,24 @@ const AddTask = () => {
   const handleTaskAddition = async () => {
     try {
       if (task.length === 0) {
-        return notify();
+        return notify(
+          "error",
+          "Erro ao adicionar tarefa! Precisa de uma descrição"
+        );
       }
 
       await axios.post("http://localhost:8000/tasks", {
         description: task,
         isCompleted: false,
       });
+
+      await fetchTasks();
+
+      setTask("");
+
+      return notify("success", "Tarefa adicionado com sucesso!");
     } catch (error) {
-      console.log(error);
+      return notify("warn", "Algo deu errado!");
     }
   };
 
