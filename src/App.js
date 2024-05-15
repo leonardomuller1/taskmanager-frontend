@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function App() {
+import TaskItem from "./components/TaskItem";
+
+const App = () => {
+  const [tasks, setTasks] = useState([
+    {
+      id: "1",
+      description: "Estudar Programação",
+      isCompleted: false,
+    },
+    {
+      id: "2",
+      description: "Ler",
+      isCompleted: true,
+    },
+  ]);
+
+  const fetchTasks = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:8000/tasks");
+      setTasks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {tasks.map((task) => (
+        <TaskItem key={task.id} task={task} />
+      ))}
+    </>
   );
-}
+};
 
 export default App;
