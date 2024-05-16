@@ -29,7 +29,7 @@ const Tasks = () => {
   }, [tasks]);
   useEffect(() => {
     fetchTasks();
-  }, []);
+  });
 
   return (
     <div className="tasks-container">

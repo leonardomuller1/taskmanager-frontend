@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { positions, transitions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import { BrowserRouter } from "react-router-dom";
 
 import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
@@ -22,9 +23,11 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <AlertProvider template={AlertTemplate} {...options}>
-      <App />
-    </AlertProvider>
+    <BrowserRouter>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <App />
+      </AlertProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
