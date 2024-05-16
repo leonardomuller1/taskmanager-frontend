@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./Tasks.scss";
+import { useAlert } from "react-alert";
+
 import TaskItem from "./TaskItem";
 import AddTask from "./AddTask";
+
+import "./Tasks.scss";
+
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
+  const alert = useAlert();
+
   const fetchTasks = async () => {
     try {
       const { data } = await axios.get("http://localhost:8000/tasks");
       setTasks(data);
-    } catch (error) {
-      console.log(error);
+    } catch (_e) {
+      alert.error("Algo deu errado.");
     }
   };
   useEffect(() => {
