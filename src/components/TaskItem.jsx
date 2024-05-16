@@ -1,8 +1,24 @@
+import { AiFillDelete } from "react-icons/ai";
+import axios from "axios";
+import { useAlert } from "react-alert"; // Certifique-se de que o pacote react-alert está instalado e importado corretamente
+
 import "./TaskItem.scss";
 
-import { AiFillDelete } from "react-icons/ai";
+const TaskItem = ({ task, fetchTasks }) => {
+  const alert = useAlert(); // Use a função useAlert para obter o alerta
 
-const TaskItem = ({ task }) => {
+  const handleTaskDeletion = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/tasks/${task._id}`);
+
+      await fetchTasks();
+
+      alert.success("A tarefa foi removida com sucesso!");
+    } catch (error) {
+      alert.error("Algo deu errado.");
+    }
+  };
+
   return (
     <div className="task-item-container">
       <div className="task-description">
@@ -20,9 +36,8 @@ const TaskItem = ({ task }) => {
           ></span>
         </label>
       </div>
-
       <div className="delete">
-        <AiFillDelete size={18} color="#f97474" />
+        <AiFillDelete size={18} color="#F97474" onClick={handleTaskDeletion} />
       </div>
     </div>
   );
