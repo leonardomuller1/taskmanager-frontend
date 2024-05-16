@@ -1,11 +1,11 @@
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
-import { useAlert } from "react-alert"; // Certifique-se de que o pacote react-alert está instalado e importado corretamente
+import { useAlert } from "react-alert";
 
 import "./TaskItem.scss";
 
 const TaskItem = ({ task, fetchTasks }) => {
-  const alert = useAlert(); // Use a função useAlert para obter o alerta
+  const alert = useAlert();
 
   const handleTaskDeletion = async () => {
     try {
@@ -19,6 +19,19 @@ const TaskItem = ({ task, fetchTasks }) => {
     }
   };
 
+  const handleTaskCompletionChange = async (e) => {
+    try {
+      await axios.patch(`http://localhost:8000/tasks/${task._id}`, {
+        isCompleted: e.target.checked,
+      });
+
+      await fetchTasks();
+
+      alert.success("A tarefa foi atualizada com sucesso!");
+    } catch (error) {
+      alert.error("Algo deu errado.");
+    }
+  };
   return (
     <div className="task-item-container">
       <div className="task-description">
@@ -30,7 +43,11 @@ const TaskItem = ({ task, fetchTasks }) => {
           }
         >
           {task.description}
-          <input type="checkbox" defaultChecked={task.isCompleted} />
+          <input
+            type="checkbox"
+            defaultChecked={task.isCompleted}
+            onChange={(e) => handleTaskCompletionChange(e)}
+          />
           <span
             className={task.isCompleted ? "checkmark completed" : "checkmark"}
           ></span>
@@ -42,5 +59,4 @@ const TaskItem = ({ task, fetchTasks }) => {
     </div>
   );
 };
-
 export default TaskItem;
