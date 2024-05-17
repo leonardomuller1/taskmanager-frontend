@@ -1,35 +1,35 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import axios from "axios";
-import { useAlert } from "react-alert";
+import { useState, useEffect, useMemo, useCallback } from 'react'
+import axios from 'axios'
+import { useAlert } from 'react-alert'
 
-import TaskItem from "./TaskItem";
-import AddTask from "./AddTask";
+import TaskItem from './TaskItem'
+import AddTask from './AddTask'
 
-import "./Tasks.scss";
+import './Tasks.scss'
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const alert = useAlert();
+  const [tasks, setTasks] = useState([])
+  const alert = useAlert()
 
   const fetchTasks = useCallback(async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/tasks");
-      setTasks(data);
+      const { data } = await axios.get('http://localhost:8000/tasks')
+      setTasks(data)
     } catch (_e) {
-      alert.error("Algo deu errado.");
+      alert.error('Algo deu errado.')
     }
-  }, [alert]);
+  }, [alert])
 
   const lastTasks = useMemo(() => {
-    return tasks.filter((task) => task.isCompleted === false);
-  }, [tasks]);
+    return tasks.filter((task) => task.isCompleted === false)
+  }, [tasks])
 
   const completedTask = useMemo(() => {
-    return tasks.filter((task) => task.isCompleted === true);
-  }, [tasks]);
+    return tasks.filter((task) => task.isCompleted === true)
+  }, [tasks])
   useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+    fetchTasks()
+  }, [fetchTasks])
 
   return (
     <div className="tasks-container">
@@ -60,6 +60,6 @@ const Tasks = () => {
         </div>
       </div>
     </div>
-  );
-};
-export default Tasks;
+  )
+}
+export default Tasks

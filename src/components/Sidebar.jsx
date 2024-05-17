@@ -1,15 +1,15 @@
-import CustomButton from "./CustomButton";
-import { useNavigate } from "react-router-dom";
+import CustomButton from './CustomButton'
+import { useNavigate } from 'react-router-dom'
 
-import "./Sidebar.scss";
-import logo from "../assets/images/logo.png";
+import './Sidebar.scss'
+import logo from '../assets/images/logo.png'
 
 const Sidebar = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSignOutClick = () => {
-    navigate("/login");
-  };
+    navigate('/login')
+  }
 
   return (
     <div className="sidebar-container">
@@ -20,7 +20,7 @@ const Sidebar = () => {
         <CustomButton onClick={handleSignOutClick}>Sair</CustomButton>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
