@@ -13,7 +13,7 @@ const Tasks = () => {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/tasks')
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/tasks`)
       setTasks(data)
     } catch (_e) {
       alert.error('Algo deu errado.')
